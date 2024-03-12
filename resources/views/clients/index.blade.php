@@ -15,9 +15,25 @@
     </nav>
 
     <div class="container">
-        @foreach($clients as $client)
-            <h2 class="text-center">{{ $client->name }}</h2>
-        @endforeach
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <td>Name</td>
+                    <td>Observation</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($clients as $client)
+                    <tr>
+                        <th>{{ $client->id }}</th>
+                        <td><a href="{{ route('clients.show', $client) }}">{{ $client->name }}</a></td>
+                        <td>{{ $client->observation }}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

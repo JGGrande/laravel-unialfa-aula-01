@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\SiteController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +18,4 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/service/{id}', [ SiteController::class, 'index' ]);
 Route::get("/clients", [ ClientController::class, 'index' ]);
+Route::get("/products", [ ProductsController::class, 'index' ]);

@@ -18,6 +18,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/service/{id}', [ SiteController::class, 'index' ]);
 Route::get("/clients", [ ClientController::class, 'index' ])->name('clients.index');
+Route::get("/clients/create", [ ClientController::class, 'create' ])->name('clients.create');
 Route::get("/clients/{id}", [ ClientController::class, 'show' ])->name('clients.show');
 Route::get("/products", [ ProductsController::class, 'index' ])->name('products.index');
 Route::get("/products/{id}", [ ProductsController::class, 'show' ])->name('products.show');
+
+Route::post('/clients', [ ClientController::class, 'store' ])->name('clients.store');

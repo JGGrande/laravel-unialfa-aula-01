@@ -25,7 +25,7 @@ class ClientController extends Controller
      */
     public function create()
     {
-        //
+        return view('clients.create');
     }
 
     /**
@@ -33,7 +33,18 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $dados = $request->except('_token');
+
+        $request->validate([
+            "name" => "required|max:255|min:1",
+            "address" => "required|max:255|min:1"
+        ]);
+
+        $dados['observation'] = $dados['observation'] ?? '';
+
+        Client::create($dados);
+
+        return redirect('/clients');
     }
 
     /**

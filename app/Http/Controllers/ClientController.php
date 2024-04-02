@@ -78,11 +78,11 @@ class ClientController extends Controller
         $dados = $request->except('_token');
         $client = Client::findOrFail($id);
 
-        $client->name = $dados['name'];
-        $client->address = $dados['address'];
-        $client->observation = $dados['observation'];
-
-        $client->save();
+        $client->update([
+            'name' =>  $dados['name'],
+            'address' => $dados['address'],
+            'observation' => $dados['observation']
+        ]);
 
         return redirect('/clients');
     }

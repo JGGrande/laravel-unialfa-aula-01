@@ -16,7 +16,7 @@
 
     <div class="form-group p-2">
         <label for="observation_field">Observation</label>
-        <textarea  class="form-control" name="obeservation" id="observation_field"></textarea>
+        <textarea  class="form-control" name="observation" id="observation_field"></textarea>
     </div>
     <br>
     <button type="submit" class="btn btn-primary">Submit</button>

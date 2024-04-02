@@ -64,7 +64,10 @@ class ClientController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $client = Client::find($id);
+        return view('clients.edit', [
+            'client' => $client
+        ]);
     }
 
     /**
@@ -72,7 +75,16 @@ class ClientController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $dados = $request->except('_token');
+        $client = Client::findOrFail($id);
+
+        $client->name = $dados['name'];
+        $client->address = $dados['address'];
+        $client->observation = $dados['observation'];
+
+        $client->save();
+
+        return redirect('/clients');
     }
 
     /**
@@ -80,6 +92,7 @@ class ClientController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Client::destroy($id);
+        return redirect("/clients");
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\FeatureFlagController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\SiteController;
 use Illuminate\Support\Facades\Route;
@@ -28,3 +29,12 @@ Route::get("/products/{id}", [ ProductsController::class, 'show' ])->name('produ
 
 Route::post('/clients', [ ClientController::class, 'store' ])->name('clients.store');
 Route::put("/clients/{id}/update", [ ClientController::class, 'update' ])->name('clients.update');
+
+Route::get("/feature-flags", [ FeatureFlagController::class, 'index' ])->name("feature_flags.index");
+Route::get("/feature-flags/create", [ FeatureFlagController::class, 'create' ])->name("feature_flags.create");
+Route::get("/feature-flags/{id}", [ FeatureFlagController::class, 'show' ])->name("feature_flags.show");
+Route::get("/feature-flags/{id}/edit", [ FeatureFlagController::class, 'edit' ])->name("feature_flags.edit");
+Route::get("/feature-flags/{id}/destroy", [ FeatureFlagController::class, 'destroy' ])->name('feature_flags.destroy');
+
+Route::post('/feature-flags', [ FeatureFlagController::class, 'store' ])->name('feature_flags.store');
+Route::put("/feature-flags/{id}/update", [ FeatureFlagController::class, 'update' ])->name('feature_flags.update');

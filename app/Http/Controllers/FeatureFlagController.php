@@ -2,24 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Client;
 use App\Models\FeatureFlag;
+use Carbon\Carbon;
+use DateTime;
 use Illuminate\Http\Request;
 
-class ClientController extends Controller
+class FeatureFlagController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $clients = Client::get();
-        $feature = FeatureFlag::where('name', 'botao_criar_cliente')->first();
-
+        $featureFlags = FeatureFlag::get();
         return view(
-            'clients.index', [
-                "clients" => $clients,
-                "feature" => $feature
+            'feature_flags.index', [
+                "feature_flags" => $featureFlags
             ]
         );
     }
@@ -29,7 +27,7 @@ class ClientController extends Controller
      */
     public function create()
     {
-        return view('clients.create');
+        return view("feature_flags.create");
     }
 
     /**
@@ -39,16 +37,11 @@ class ClientController extends Controller
     {
         $dados = $request->except('_token');
 
-        $request->validate([
-            "name" => "required|max:255|min:1",
-            "address" => "required|max:255|min:1"
-        ]);
+        $dados['active'] = filter_var($dados['active'], FILTER_VALIDATE_BOOLEAN);
 
-        $dados['observation'] = $dados['observation'] ?? '';
+        FeatureFlag::create($dados);
 
-        Client::create($dados);
-
-        return redirect('/clients');
+        return redirect("/feature-flags");
     }
 
     /**
@@ -56,10 +49,10 @@ class ClientController extends Controller
      */
     public function show(string $id)
     {
-        $client = Client::find($id);
+        $feature = FeatureFlag::find($id);
 
-        return view('clients.show', [
-            'client' => $client
+        return view("feature_flags.show", [
+            "feature_flag" => $feature
         ]);
     }
 
@@ -68,9 +61,10 @@ class ClientController extends Controller
      */
     public function edit(string $id)
     {
-        $client = Client::find($id);
-        return view('clients.edit', [
-            'client' => $client
+        $feature = FeatureFlag::find($id);
+
+        return view("feature_flags.edit", [
+            "feature_flag" => $feature
         ]);
     }
 
@@ -80,15 +74,17 @@ class ClientController extends Controller
     public function update(Request $request, string $id)
     {
         $dados = $request->except('_token');
-        $client = Client::findOrFail($id);
+        $feature = FeatureFlag::findOrFail($id);
 
-        $client->update([
+        $dados['active'] = filter_var($dados['active'], FILTER_VALIDATE_BOOLEAN);
+
+        $feature->update([
             'name' =>  $dados['name'],
-            'address' => $dados['address'],
-            'observation' => $dados['observation']
+            'active' => $dados['active'],
+            'description' => $dados['description']
         ]);
 
-        return redirect('/clients');
+        return redirect('/feature-flags');
     }
 
     /**
@@ -96,7 +92,7 @@ class ClientController extends Controller
      */
     public function destroy(string $id)
     {
-        Client::destroy($id);
-        return redirect("/clients");
+        FeatureFlag::destroy($id);
+        return redirect("/feature-flags");
     }
 }

@@ -25,6 +25,8 @@
     </tbody>
 </table>
 
-<a class="btn btn-success" href="{{ route('clients.create') }}">Create</a>
+@if($feature->active)
+    <a class="btn btn-success" href="{{ route('clients.create') }}">Create</a>
+@endif
 
 @endsection()
